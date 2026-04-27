@@ -3,25 +3,19 @@ function drawLines() {
     const container = document.querySelector('.main-container');
     if (!svg || !container) return;
 
-    svg.innerHTML = ''; // გასუფთავება
+    svg.innerHTML = '';
     const containerRect = container.getBoundingClientRect();
 
     document.querySelectorAll('.hub').forEach(hub => {
         const title = hub.querySelector('.hub-title');
         const nodes = hub.querySelectorAll('.node');
-        
-        if (!title || nodes.length === 0) return;
-
         const titleRect = title.getBoundingClientRect();
         
-        // საწყისი წერტილი სათაურის ქვედა ცენტრია
         const startX = (titleRect.left + titleRect.width / 2) - containerRect.left;
         const startY = titleRect.bottom - containerRect.top;
 
         nodes.forEach(node => {
             const nodeRect = node.getBoundingClientRect();
-            
-            // საბოლოო წერტილი რგოლის ზედა ცენტრია
             const endX = (nodeRect.left + nodeRect.width / 2) - containerRect.left;
             const endY = nodeRect.top - containerRect.top;
 
@@ -37,10 +31,9 @@ function drawLines() {
     });
 }
 
-// ვარსკვლავები
+// ვარსკვლავების შექმნა (იგივე რჩება)
 function createStars() {
     const starContainer = document.getElementById('stars-container');
-    if (!starContainer) return;
     for (let i = 0; i < 150; i++) {
         const star = document.createElement('div');
         star.className = 'star';
@@ -49,17 +42,20 @@ function createStars() {
         star.style.height = size;
         star.style.left = Math.random() * 100 + '%';
         star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 4 + 's';
-        if (Math.random() > 0.8) star.style.background = '#ffcc00'; // ზოგი ყვითელია
         starContainer.appendChild(star);
     }
 }
 
-// ინიციალიზაცია
+// მაუსის მოძრაობაზე მცირე რხევა მთლიანი კონტეინერისთვის
+document.addEventListener('mousemove', (e) => {
+    const x = (window.innerWidth / 2 - e.pageX) / 50;
+    const y = (window.innerHeight / 2 - e.pageY) / 50;
+    document.querySelector('.main-container').style.transform = `translateX(${x}px) translateY(${y}px)`;
+    // ხაზების გადახატვა მოძრაობისას, რომ არ მოწყდეს
+    drawLines();
+});
+
 createStars();
-// ველოდებით შრიფტების ჩატვირთვას, რომ ზომები ზუსტად გაიზომოს
 window.addEventListener('load', drawLines);
 window.addEventListener('resize', drawLines);
-
-// დამატებითი შემოწმება GitHub Pages-ისთვის
-setTimeout(drawLines, 500);
+setInterval(drawLines, 100); // უზრუნველყოფს ხაზების სინქრონს ანიმაციის დროს
