@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    background: #050a15; /* მუქი ლურჯი */
+    color: white;
+    font-family: 'Helvetica', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#stars-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.main-container {
+    display: flex;
+    width: 80%;
+    justify-content: space-around;
+    z-index: 1;
+}
+
+.hub {
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease-out;
+}
+
+.title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+/* Nodes (რგოლები) */
+.nodes-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.node {
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.node:hover {
+    border-color: #ffcc00; /* ყვითელი აქცენტი */
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+    transform: scale(1.1);
+}
+
+/* ვარსკვლავების ანიმაცია */
+@keyframes breathe {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: breathe 3s infinite ease-in-out;
+}
