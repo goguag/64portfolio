@@ -16,7 +16,7 @@ function drawLines() {
 
         nodes.forEach(node => {
             const nodeRect = node.getBoundingClientRect();
-            // ვიღებთ ბურთის ცენტრს
+            // ხაზი ზუსტად ბურთის ცენტრში უნდა მივიდეს
             const endX = (nodeRect.left + nodeRect.width / 2) - containerRect.left;
             const endY = (nodeRect.top + nodeRect.height / 2) - containerRect.top;
 
@@ -25,40 +25,22 @@ function drawLines() {
             line.setAttribute("y1", startY);
             line.setAttribute("x2", endX);
             line.setAttribute("y2", endY);
-            line.setAttribute("stroke", "rgba(255, 255, 255, 0.15)");
-            line.setAttribute("stroke-width", "1");
+            line.setAttribute("stroke", "rgba(255, 255, 255, 0.2)");
+            line.setAttribute("stroke-width", "1.5");
             svg.appendChild(line);
         });
     });
 }
 
-// მუდმივი ლუპი ხაზების გადასახატად (რომ რხევას გაჰყვეს)
-function loop() {
+function update() {
     drawLines();
-    requestAnimationFrame(loop);
+    requestAnimationFrame(update);
 }
 
-// ვარსკვლავები
-const starContainer = document.getElementById('stars-container');
-for (let i = 0; i < 150; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    const size = Math.random() * 2 + 'px';
-    star.style.width = size;
-    star.style.height = size;
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 100 + '%';
-    starContainer.appendChild(star);
-}
-
-// პარალაქსი
-document.addEventListener('mousemove', (e) => {
-    const x = (window.innerWidth / 2 - e.pageX) / 70;
-    const y = (window.innerHeight / 2 - e.pageY) / 70;
-    document.querySelector('.main-container').style.transform = `translate(${x}px, ${y}px)`;
-});
-
+// ინიციალიზაცია
 window.addEventListener('load', () => {
-    requestAnimationFrame(loop);
+    createStars(); // ვარსკვლავების ფუნქცია იგივე დატოვე
+    update(); // იწყებს მუდმივ გადახატვას
 });
+
 window.addEventListener('resize', drawLines);
