@@ -1,47 +1,92 @@
-function drawLines() {
-    const svg = document.querySelector('.connections-svg');
-    svg.innerHTML = ''; // გასუფთავება გადახატვისას
-
-    document.querySelectorAll('.hub').forEach(hub => {
-        const title = hub.querySelector('.hub-title');
-        const nodes = hub.querySelectorAll('.node');
-        const titleRect = title.getBoundingClientRect();
-        const containerRect = svg.getBoundingClientRect();
-
-        const startX = titleRect.left + titleRect.width / 2 - containerRect.left;
-        const startY = titleRect.bottom - containerRect.top;
-
-        nodes.forEach(node => {
-            const nodeRect = node.getBoundingClientRect();
-            const endX = nodeRect.left + nodeRect.width / 2 - containerRect.left;
-            const endY = nodeRect.top - containerRect.top;
-
-            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", startX);
-            line.setAttribute("y1", startY);
-            line.setAttribute("x2", endX);
-            line.setAttribute("y2", endY);
-            svg.appendChild(line);
-        });
-    });
+body {
+    margin: 0;
+    background: #050a15;
+    color: white;
+    font-family: sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-// ვარსკვლავების შექმნა
-function createStars() {
-    const container = document.getElementById('stars-container');
-    for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        const size = Math.random() * 2 + 'px';
-        star.style.width = size;
-        star.style.height = size;
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 4 + 's';
-        container.appendChild(star);
+.main-logo {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem;
+    font-weight: bold;
+    letter-spacing: 10px;
+    opacity: 0.8;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 200px;
+    width: 100%;
+    position: relative;
+}
+
+.hub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    width: 45%;
+}
+
+.hub-title {
+    font-size: 1.5rem;
+    margin-bottom: 100px; /* დაშორება რგოლებამდე */
+    text-transform: uppercase;
+}
+
+.nodes {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.node {
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    transition: 0.3s;
+}
+
+.node:hover {
+    border-color: #ffcc00;
+    box-shadow: 0 0 15px #ffcc0066;
+}
+
+.connections-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (max-width: 800px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 150px;
     }
+    .nodes { flex-wrap: wrap; justify-content: center; }
 }
 
-createStars();
-window.onload = drawLines;
-window.onresize = drawLines; // ზომის შეცვლისას ხაზები გადაიხატება
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: breathe 4s infinite ease-in-out;
+}
+
+@keyframes breathe {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.4; }
+}
