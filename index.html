@@ -3,29 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64 - Project & Studio</title>
+    <title>64 - Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="stars-container"></div>
+    
+    <header class="main-logo">
+        <h1>64</h1>
+    </header>
 
     <main class="main-container">
-        <section class="hub project-64">
-            <h1 class="title">Project 64</h1>
-            <div class="nodes-container">
-                <div class="node node-p1"></div>
-                <div class="node node-p2"></div>
+        <svg class="connections-svg"></svg>
+
+        <section class="hub" id="project-64">
+            <h2 class="hub-title">Project 64</h2>
+            <div class="nodes">
+                <div class="node" data-label="Content 1"></div>
+                <div class="node" data-label="Content 2"></div>
             </div>
-            <svg class="lines"><line x1="50%" y1="0" x2="20%" y2="100%" /><line x1="50%" y1="0" x2="80%" y2="100%" /></svg>
         </section>
 
-        <section class="hub studio-64">
-            <h1 class="title">64 Studio</h1>
-            <div class="nodes-container">
-                <div class="node node-s1"></div>
-                <div class="node node-s2"></div>
-                <div class="node node-s3"></div>
-                <div class="node node-s4"></div>
+        <section class="hub" id="studio-64">
+            <h2 class="hub-title">64 Studio</h2>
+            <div class="nodes">
+                <div class="node" data-label="Service 1"></div>
+                <div class="node" data-label="Service 2"></div>
+                <div class="node" data-label="Service 3"></div>
+                <div class="node" data-label="Service 4"></div>
             </div>
         </section>
     </main>
