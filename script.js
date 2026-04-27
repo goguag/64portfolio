@@ -11,27 +11,36 @@ function drawLines() {
         const nodes = hub.querySelectorAll('.node');
         const titleRect = title.getBoundingClientRect();
         
+        // ხაზი იწყება სათაურის შუა წერტილიდან
         const startX = (titleRect.left + titleRect.width / 2) - containerRect.left;
         const startY = titleRect.bottom - containerRect.top;
 
         nodes.forEach(node => {
             const nodeRect = node.getBoundingClientRect();
+            
+            // ხაზი სრულდება რგოლის ცენტრში
             const endX = (nodeRect.left + nodeRect.width / 2) - containerRect.left;
-            const endY = nodeRect.top - containerRect.top;
+            const endY = (nodeRect.top + nodeRect.height / 2) - containerRect.top;
 
             const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
             line.setAttribute("x1", startX);
             line.setAttribute("y1", startY);
             line.setAttribute("x2", endX);
             line.setAttribute("y2", endY);
-            line.setAttribute("stroke", "rgba(255, 255, 255, 0.15)");
+            line.setAttribute("stroke", "rgba(255, 255, 255, 0.1)");
             line.setAttribute("stroke-width", "1");
             svg.appendChild(line);
         });
     });
 }
 
-// ვარსკვლავების შექმნა (იგივე რჩება)
+// მუდმივი განახლება რხევის დასაჭერად
+function animate() {
+    drawLines();
+    requestAnimationFrame(animate);
+}
+
+// ვარსკვლავები
 function createStars() {
     const starContainer = document.getElementById('stars-container');
     for (let i = 0; i < 150; i++) {
@@ -46,16 +55,15 @@ function createStars() {
     }
 }
 
-// მაუსის მოძრაობაზე მცირე რხევა მთლიანი კონტეინერისთვის
+// პარალაქს ეფექტი
 document.addEventListener('mousemove', (e) => {
-    const x = (window.innerWidth / 2 - e.pageX) / 50;
-    const y = (window.innerHeight / 2 - e.pageY) / 50;
+    const x = (window.innerWidth / 2 - e.pageX) / 60;
+    const y = (window.innerHeight / 2 - e.pageY) / 60;
     document.querySelector('.main-container').style.transform = `translateX(${x}px) translateY(${y}px)`;
-    // ხაზების გადახატვა მოძრაობისას, რომ არ მოწყდეს
-    drawLines();
 });
 
 createStars();
-window.addEventListener('load', drawLines);
+window.addEventListener('load', () => {
+    animate(); // ვიწყებთ მუდმივ ხატვას
+});
 window.addEventListener('resize', drawLines);
-setInterval(drawLines, 100); // უზრუნველყოფს ხაზების სინქრონს ანიმაციის დროს
