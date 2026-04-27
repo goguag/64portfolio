@@ -1,111 +1,41 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #03070f;
-    color: white;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    min-height: 100vh;
-    overflow: hidden; /* აცილებს ზედმეტ სქროლს */
-    position: relative;
+/* რგოლების საწყისი პოზიციები - ზოგი მაღლა, ზოგი დაბლა */
+.node:nth-child(odd) {
+    margin-top: 20px;
 }
-
-.main-logo {
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 6rem; /* გავზარდეთ */
-    font-weight: 900;
-    letter-spacing: 20px;
-    opacity: 0.8;
-    z-index: 10;
+.node:nth-child(even) {
+    margin-top: -20px;
 }
-
-.main-container {
-    display: flex;
-    justify-content: center; /* ცენტრისკენ მოვწიეთ */
-    gap: 100px; /* სექციებს შორის მანძილი */
-    align-items: flex-start;
-    padding-top: 30vh;
-    width: 100%;
-    position: relative;
-}
-
-.hub {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    transition: all 0.5s ease;
-}
-
-.hub-title {
-    font-size: 2.2rem; /* გავზარდეთ */
-    margin-bottom: 80px;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 5px;
-    background: #03070f;
-    padding: 10px 20px;
-    cursor: default;
-}
-
-.nodes {
-    display: flex;
-    flex-direction: row;
-    gap: 35px;
-    transition: all 0.5s ease;
+.node:nth-child(3n) {
+    margin-top: 10px;
 }
 
 .node {
-    width: 60px; /* ოდნავ გავზარდეთ */
+    width: 60px;
     height: 60px;
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.05);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     position: relative;
+    
+    /* ანიმაციისთვის */
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.3, 1), 
+                filter 0.5s ease, 
+                opacity 0.5s ease;
 }
 
-/* როცა რომელიმე რგოლს მივუტანთ მაუსს */
-.nodes:hover .node:not(:hover) {
-    transform: scale(0.85); /* სხვები პატარავდება */
-    filter: blur(3px); /* სხვები იბლარება */
-    opacity: 0.5;
+/* რხევის ანიმაცია მაუსის მიტანისას */
+@keyframes swing {
+    0% { transform: rotate(0deg) scale(1.3); }
+    25% { transform: rotate(3deg) scale(1.3); }
+    50% { transform: rotate(-3deg) scale(1.3); }
+    75% { transform: rotate(1deg) scale(1.3); }
+    100% { transform: rotate(0deg) scale(1.3); }
 }
 
 .node:hover {
     border-color: #ffcc00;
     box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
-    transform: scale(1.3) translateY(-10px); /* დიდდება და მაღლა იწევს */
-    background: rgba(255, 204, 0, 0.1);
-}
-
-.connections-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-line {
-    transition: all 0.4s ease;
-}
-
-/* ვარსკვლავები */
-.star {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    animation: breathe 5s infinite ease-in-out;
-}
-
-@keyframes breathe {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.5; }
+    animation: swing 1s ease-in-out infinite; /* მუდმივი ნაზი რხევა */
+    z-index: 100;
 }
