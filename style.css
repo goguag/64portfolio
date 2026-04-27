@@ -1,65 +1,89 @@
+/* ძირითადი სტილები */
 body {
     margin: 0;
-    background: #050a15;
+    padding: 0;
+    background: #03070f; /* ძალიან მუქი ლურჯი */
     color: white;
-    font-family: sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-}
-
-.main-logo {
-    position: absolute;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 4rem;
-    font-weight: bold;
-    letter-spacing: 10px;
-    opacity: 0.8;
-}
-
-.main-container {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 200px;
-    width: 100%;
     position: relative;
 }
 
+/* 1. ლოგო ცენტრში ზემოთ */
+.main-logo {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 5rem;
+    font-weight: 900;
+    letter-spacing: 15px;
+    opacity: 0.7;
+    margin: 0;
+    z-index: 10;
+}
+
+/* მთავარი კონტეინერი */
+.main-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 25vh; /* ადგილი ლოგოსთვის */
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 80vh;
+}
+
+/* სექციები */
 .hub {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    position: relative;
     z-index: 2;
-    width: 45%;
 }
 
 .hub-title {
-    font-size: 1.5rem;
-    margin-bottom: 100px; /* დაშორება რგოლებამდე */
+    font-size: 1.8rem;
+    margin-bottom: 120px; /* დიდი დაშორება რგოლებამდე */
     text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 3px;
+    background: #03070f; /* რომ ხაზი უკან დაიმალოს */
+    padding: 5px 15px;
 }
 
+/* 2. რგოლების ჰორიზონტალური განლაგება */
 .nodes {
     display: flex;
-    flex-direction: row;
-    gap: 25px;
+    flex-direction: row; /* აი აქ იყო შეცდომა! */
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
 }
 
 .node {
-    width: 45px;
-    height: 45px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .node:hover {
     border-color: #ffcc00;
-    box-shadow: 0 0 15px #ffcc0066;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+    transform: scale(1.1);
 }
 
+/* SVG ხაზები */
 .connections-svg {
     position: absolute;
     top: 0;
@@ -70,23 +94,30 @@ body {
     z-index: 1;
 }
 
-@media (max-width: 800px) {
+/* Responsive - მობაილზე */
+@media (max-width: 900px) {
+    .main-logo { font-size: 3.5rem; top: 20px; }
     .main-container {
         flex-direction: column;
         align-items: center;
-        gap: 150px;
+        gap: 100px;
+        padding-top: 150px;
     }
-    .nodes { flex-wrap: wrap; justify-content: center; }
+    .hub-title { margin-bottom: 60px; font-size: 1.4rem; }
+    .nodes { flex-wrap: wrap; gap: 20px; }
+    .node { width: 40px; height: 40px; }
 }
 
+/* ვარსკვლავები */
 .star {
     position: absolute;
     background: white;
     border-radius: 50%;
     animation: breathe 4s infinite ease-in-out;
+    pointer-events: none;
 }
 
 @keyframes breathe {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.4; }
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
 }
